@@ -1,0 +1,30 @@
+policies:
+  - name: "Avoid Root User"
+    condition: "container.User != 'root'"
+    severity: "Critical"
+    action: "Alert"
+    description: "The container must not run as the root user."
+
+  - name: "Enforce CPU Limit"
+    condition: "container.CPULimit > 0"
+    severity: "High"
+    action: "Block"
+    description: "The container must have a CPU limit set."
+
+  - name: "Enforce Memory Limit"
+    condition: "container.MemoryLimit > 0"
+    severity: "High"
+    action: "Block"
+    description: "The container must have a memory limit set."
+
+  - name: "Avoid Latest Image Tag"
+    condition: "container.ImageTag != 'latest'"
+    severity: "Medium"
+    action: "Alert"
+    description: "The container image tag must not be set to 'latest'."
+
+  - name: "Restrict Privileged Mode"
+    condition: "container.Privileged == false"
+    severity: "Critical"
+    action: "Block"
+    description: "The container must not run in privileged mode."

@@ -1,0 +1,6 @@
+# Falco Rules for Monitoring
+- rule: Unauthorized File Access
+  desc: Detect attempts to access sensitive files
+  condition: evt.type = "open" and fd.name in ("/etc/passwd", "/etc/shadow")
+  output: "Unauthorized access detected: %evt.args"
+  priority: WARNING

